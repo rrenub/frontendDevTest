@@ -5,7 +5,7 @@ import ProductDetails from './ProductDetails';
 export default function ProductContainer() {
   const { id } = useParams();
 
-  const [product, setProduct] = useState({})
+  const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   
@@ -14,7 +14,6 @@ export default function ProductContainer() {
     fetch(`https://itx-frontend-test.onrender.com/api/product/${id}`) 
       .then((response) => response.json()) 
       .then((product) => {
-        console.log(product)
         setProduct(product)
       })
       .catch((error) => console.error(error))
@@ -23,10 +22,13 @@ export default function ProductContainer() {
 
   return (
     <>
-      { loading ? 
-        <p>cargando</p> :
-        <ProductDetails product={product}/>
-      }
+      {loading ? (
+        <p>cargando</p>
+      ) : product ? (
+        <ProductDetails product={product} />
+      ) : (
+        <p>Producto no encontrado</p>
+      )}
     </>
   )
 }
