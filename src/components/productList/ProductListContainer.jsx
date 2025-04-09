@@ -1,7 +1,23 @@
+import ProductList from './ProductList'
 import { Input } from '/src/shared/components/input/Input'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function ProductListContainer() {
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    setLoading(true)
+    fetch("https://itx-frontend-test.onrender.com/api/product") 
+      .then((response) => response.json()) 
+      .then((products) => {
+        console.log(products)
+        setProducts(products)
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
     <>
@@ -13,9 +29,10 @@ export default function ProductListContainer() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div className="aspect-square bg-white border border-gray-300 flex items-start p-4">
-              <span className="text-gray-800 font-medium">Item 1</span>
-            </div>
+            { loading ? 
+              <p>cargando</p> :
+              <ProductList products={products}/>
+            }
         </div>
     </>
   )
