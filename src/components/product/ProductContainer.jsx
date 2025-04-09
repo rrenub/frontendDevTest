@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
+import { fetchWithCache } from '/src/shared/lib/cacheUtils'
 import ProductDetails from './ProductDetails';
 
 export default function ProductContainer() {
@@ -11,8 +12,7 @@ export default function ProductContainer() {
   
   useEffect(() => {
     setLoading(true)
-    fetch(`https://itx-frontend-test.onrender.com/api/product/${id}`) 
-      .then((response) => response.json()) 
+    fetchWithCache(`https://itx-frontend-test.onrender.com/api/product/${id}`) 
       .then((product) => {
         setProduct(product)
       })

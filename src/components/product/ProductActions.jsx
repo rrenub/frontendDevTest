@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from '/src/shared/components/form/Form'
 import { Button } from '/src/shared/components/button/Button'
+import { useCart } from '/src/context/CartContext'
 
 const formSchema = z.object({
   color: z.number(),
@@ -25,6 +26,8 @@ const formSchema = z.object({
 })
 
 export default function ProductActions({ product }) {
+  const { updateCart } = useCart()
+
   const defaultColor = product.options.colors[0]
   const defaultStorage = product.options.storages[0]
 
@@ -53,7 +56,7 @@ export default function ProductActions({ product }) {
       if (!response.ok) throw new Error("Error al añadir al carrito")
   
       const data = await response.json()
-      console.log("Producto añadido al carrito. Total:", data.count)
+      updateCart(data.count)
     } catch (err) {
       console.error("Fallo al enviar al carrito:", err)
     }

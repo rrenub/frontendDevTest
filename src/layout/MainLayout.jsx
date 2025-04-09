@@ -1,15 +1,18 @@
 import React from 'react'
 import { Outlet } from 'react-router'
+import { CartProvider, useCart } from '../context/CartContext'
+import { ShoppingCart } from 'lucide-react'
+import Header from './Header'
 
 export default function MainLayout() {
   return (
-    <div className="min-h-screen flex flex-col border border-gray-300">
-      <header className="w-full p-6 border-b border-gray-300">
-        <h1 className="text-xl font-semibold text-gray-800">Frontend Dev</h1>
-      </header>
-      <main className="flex-1 p-6">
-        <Outlet />
-      </main>
-    </div>
+    <CartProvider>
+      <div className="min-h-screen flex flex-col border border-gray-300">
+        <Header/>
+        <main className="flex-1 p-6">
+          <Outlet />
+        </main>
+      </div>
+    </CartProvider>
   )
 }
