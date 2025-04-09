@@ -8,7 +8,6 @@ export default function ProductContainer() {
 
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
   
   useEffect(() => {
     setLoading(true)
