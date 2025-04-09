@@ -2,23 +2,14 @@ import { useState } from 'react'
 import { Button } from './shared/components/button/Button'
 import { Input } from './shared/components/input/Input'
 import { BASE } from './shared/lib/routesResolver'
-import { Navigate, Route, Routes } from 'react-router'
+import { createBrowserRouter, Navigate, Route, RouterProvider, Routes } from 'react-router'
 import MainLayout from './layout/MainLayout'
 import ProductListContainer from './components/productList/ProductListContainer'
 import ProductContainer from './components/product/ProductContainer'
+import { routes } from './Routes'
 
-function App() {
-  const [count, setCount] = useState(0)
+const router = createBrowserRouter(routes)
 
-  return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route path="/" element={<Navigate to={"/products"} />}></Route>
-        <Route path="/products" element={<ProductListContainer />}/>
-        <Route path="/product/:id" element={<ProductContainer/>}/>
-      </Route>
-    </Routes>
-  )
+export default function App() {
+  return <RouterProvider router={router} />
 }
-
-export default App
